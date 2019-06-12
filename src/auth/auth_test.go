@@ -49,7 +49,7 @@ func TestLoginUser(t *testing.T) {
 	// Test first auth method
 	req.Form.Add("username", "tester1")
 	req.Form.Add("password", "somePassword")
-	if !LoginUser(req, httptest.NewRecorder(), testUserStore) {
+	if !LoginUser(httptest.NewRecorder(), req, testUserStore) {
 		t.Error("Login failed for tester1. Expected true, got false")
 	}
 	if session.GetString("_authMethod") != "a1" {
@@ -65,7 +65,7 @@ func TestLoginUser(t *testing.T) {
 	// Test second auth method
 	req.Form.Set("username", "tester2")
 	req.Form.Set("password", "somePassword")
-	if !LoginUser(req, httptest.NewRecorder(), testUserStore) {
+	if !LoginUser(httptest.NewRecorder(), req, testUserStore) {
 		t.Error("Login failed for tester2. Expected true, got false")
 	}
 	if session.GetString("_authMethod") != "a2" {
@@ -111,7 +111,7 @@ func TestLogoutUser(t *testing.T) {
 	req = common.SetSessionToContext(req, session)
 	req = models.SetUserToContext(req, user)
 
-	LogoutUser(req, httptest.NewRecorder())
+	LogoutUser(httptest.NewRecorder(), req)
 	if session.GetBool("loggedin", true) {
 		t.Error("Failed to logout user. Expected false, got true")
 	}
