@@ -72,6 +72,7 @@ func newDatabaseStore(e *Environment) (*SessionStore, error) {
 	options := &Options{
 		Path:      "/",
 		MaxAge:    0,
+		HTTPOnly:  true,
 		TableName: "sessions",
 	}
 	switch e.DB.Driver {

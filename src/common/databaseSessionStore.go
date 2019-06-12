@@ -118,8 +118,9 @@ func (m *dbStore) Get(r *http.Request, name string) (*sessions.Session, error) {
 func (m *dbStore) New(r *http.Request, name string) (*sessions.Session, error) {
 	session := sessions.NewSession(m, name)
 	session.Options = &sessions.Options{
-		Path:   m.Options.Path,
-		MaxAge: m.Options.MaxAge,
+		Path:     m.Options.Path,
+		MaxAge:   m.Options.MaxAge,
+		HttpOnly: m.Options.HTTPOnly,
 	}
 	session.IsNew = true
 	var err error
